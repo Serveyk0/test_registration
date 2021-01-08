@@ -1,18 +1,17 @@
-const REGISTRATION: string   = "Registration"
-const EDIT        : string   = "edit";
-const DELETE      : string   = "delete";
-const HEADER      : string[] =
-    [
-        "name", 
-        "surname",
-        "email",
-        "phone",
-        "edit",
-        "delete"
-    ];
+const REGISTRATION = "Registration";
+const EDIT = "edit";
+const DELETE = "delete";
+const HEADER: string[] = [
+  "name",
+  "surname",
+  "email",
+  "phone",
+  "edit",
+  "delete"
+];
 export default {
-    REGISTRATION: REGISTRATION,
-    EDIT: EDIT,
-    DELETE: DELETE,
-    HEADER: HEADER
-}
+  REGISTRATION: REGISTRATION,
+  EDIT: EDIT,
+  DELETE: DELETE,
+  HEADER: HEADER
+};

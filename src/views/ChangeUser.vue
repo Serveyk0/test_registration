@@ -2,78 +2,80 @@
   <div class="change-user grid">
     <div class="change-user__info grid">
       <div class="attribute grid">
-        <label for="name">{{NAME}}</label>
+        <label for="name">{{ NAME }}</label>
         <input v-model="n" name="name" />
       </div>
       <div class="attribute grid">
-        <label for="surname">{{SURNAME}}</label>
+        <label for="surname">{{ SURNAME }}</label>
         <input v-model="s" name="surname" />
       </div>
       <div class="attribute grid">
-        <label for="email">{{EMAIL}}</label>
+        <label for="email">{{ EMAIL }}</label>
         <input v-model="e" name="email" />
       </div>
       <div class="attribute grid">
-        <label for="phone">{{PHONE}}</label>
+        <label for="phone">{{ PHONE }}</label>
         <input v-model="p" name="phone" />
       </div>
     </div>
-    <button @click="Save">{{SAVE}}</button>
+    <button @click="Save">{{ SAVE }}</button>
     <textarea v-if="operation === 'add'" v-model="jsonObj" />
     <div class="change-user__buttons grid">
-      <button @click="parse">{{PARSE_JSON}}</button>
+      <button v-if="operation === 'add'" @click="parse">
+        {{ PARSE_JSON }}
+      </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import userModel from "@/models/userModel";
-import Data from './constants';
+import UserModel from "@/models/userModel";
+import Data from "./constants";
 @Options({
   props: {
     name: {
       type: String,
       required: true,
-      default: "",
+      default: ""
     },
     surname: {
       type: String,
       required: true,
-      default: "",
+      default: ""
     },
     email: {
       type: String,
       required: true,
-      default: "",
+      default: ""
     },
     phone: {
       type: String,
       required: true,
-      default: "",
+      default: ""
     },
     operation: {
       type: String,
-      required: true,
+      required: true
     },
     index: {
       type: [String, Number],
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
-      n: ""                       as string,
-      s: ""                       as string,
-      e: ""                       as string,
-      p: ""                       as string,
-      i: ""                       as string,
-      jsonObj   : []              as Array<userModel>,
-      NAME      : Data.NAME       as string,
-      SURNAME   : Data.SURNAME    as string,
-      EMAIL     : Data.EMAIL      as string,
-      PHONE     : Data.PHONE      as string,
-      SAVE      : Data.SAVE       as string,
+      n: "" as string,
+      s: "" as string,
+      e: "" as string,
+      p: "" as string,
+      i: "" as string,
+      jsonObj: [] as Array<UserModel>,
+      NAME: Data.NAME as string,
+      SURNAME: Data.SURNAME as string,
+      EMAIL: Data.EMAIL as string,
+      PHONE: Data.PHONE as string,
+      SAVE: Data.SAVE as string,
       PARSE_JSON: Data.PARSE_JSON as string
     };
   },
@@ -86,12 +88,12 @@ import Data from './constants';
   methods: {
     Save() {
       if (this.n !== "" || this.s !== "" || this.e !== "" || this.p !== "") {
-        const currArr: Array<userModel> = JSON.parse(localStorage.users);
-        const newObj : userModel = {
-          name   : this.n,
+        const currArr: Array<UserModel> = JSON.parse(localStorage.users);
+        const newObj: UserModel = {
+          name: this.n,
           surname: this.s,
-          email  : this.e,
-          phone  : this.p,
+          email: this.e,
+          phone: this.p
         };
         if (this.operation === "add") {
           currArr.push(newObj);
@@ -105,7 +107,7 @@ import Data from './constants';
     },
     parse() {
       if (this.jsonObj.length > 0) {
-        const obj   : string = JSON.stringify(this.jsonObj, null, 2);
+        const obj: string = JSON.stringify(this.jsonObj, null, 2);
         const newObj: string = obj
           .replaceAll("\\n", "")
           .replaceAll("},]", "}]")
@@ -115,8 +117,8 @@ import Data from './constants';
           .replaceAll(']"', "")
           .replaceAll("},{", "},\n{")
           .replace(/([a-zA-Z0-9]+?):/g, '"$1":');
-        const arr   : Array<string>    = newObj.split(",\n");
-        const newArr: Array<userModel> = [];
+        const arr: Array<string> = newObj.split(",\n");
+        const newArr: Array<UserModel> = [];
         for (let i = 0; i < arr.length; i++) newArr.push(JSON.parse(arr[i]));
         localStorage.setItem(
           "users",
@@ -126,8 +128,8 @@ import Data from './constants';
         );
       }
       this.$router.push("/");
-    },
-  },
+    }
+  }
 })
 export default class ChangeUser extends Vue {}
 </script>
